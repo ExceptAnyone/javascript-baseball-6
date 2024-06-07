@@ -10,7 +10,7 @@ class Computer {
       }
     }
 
-    return computer.join("");
+    return computer;
   }
 }
 
