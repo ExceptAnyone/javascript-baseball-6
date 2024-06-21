@@ -2,38 +2,36 @@ import { Console } from "@woowacourse/mission-utils";
 import { ANSWERS, MESSAGES } from "./constants/messages.js";
 import Computer from "./Computer.js";
 import Validate from "./Validate.js";
+import { FLAG } from "./constants/flag.js";
 
 class App {
   constructor() {
     this.computer = new Computer();
     this.randomNumber = this.computer.getRandomNumber();
+    console.log("this.randomNumber", this.randomNumber);
   }
   play() {
     this.printMessage(MESSAGES.START_GAME);
     this.inputNumber();
-    console.log("this.randomNumber", this.randomNumber);
   }
 
   printMessage(message) {
     Console.print(message);
   }
 
-  inputNumber() {
-    Console.readLine(MESSAGES.INPUT_NUMBER, (answer) => {
-      console.log("answer", answer.length);
-      Validate.isAnswer(answer);
-      this.checkAnswer(answer);
-    });
+  async inputNumber() {
+    const userInputNumber = await Console.readLineAsync(MESSAGES.INPUT_NUMBER);
+    Validate.isAnswer(userInputNumber);
+    this.checkAnswer(userInputNumber);
   }
 
-  checkAnswer(answer) {
+  async checkAnswer(answer) {
     const answerArray = answer.split("").map(Number);
-    console.log("answerArray", answerArray);
     const { strike, balls } = this.calculateResult(answerArray);
 
     if (strike === ANSWERS.THREE_STRIKE) {
       this.printMessage(MESSAGES.GAME_OVER);
-      // this.playQuit();
+      this.isReplay();
     } else {
       this.printMessage(`${strike} 스트라이크, ${balls} 볼`);
       this.inputNumber();
@@ -55,8 +53,14 @@ class App {
     return { strike, balls };
   }
 
-  playQuit() {
-    Console.close();
+  async isReplay() {
+    const userInputFlag = await Console.readLineAsync(MESSAGES.RESTART);
+    Validate.isRestart(userInputFlag);
+    userInputFlag === FLAG.YES ? this.play() : this.playQuit();
+  }
+
+  async playQuit() {
+    this.printMessage(MESSAGES.GAME_OVER);
   }
 }
 
