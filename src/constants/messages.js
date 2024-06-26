@@ -19,6 +19,7 @@ export const ANSWERS = Object.freeze({
   TWO_BALL: 2,
   ONE_STRIKE: 1,
   ONE_BALL: 1,
+  ZERO: 0,
 });
 
 export const ERROR_MESSAGES = Object.freeze({

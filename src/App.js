@@ -33,6 +33,8 @@ class App {
     if (strike === ANSWERS.THREE_STRIKE) {
       this.printMessage(MESSAGES.GAME_OVER);
       this.isReplay();
+    } else if (strike === ANSWERS.ZERO && balls === ANSWERS.ZERO) {
+      this.printMessage(MESSAGES.NOTHING);
     } else {
       this.printMessage(`${strike} 스트라이크, ${balls} 볼`);
       this.inputNumber();
