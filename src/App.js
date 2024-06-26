@@ -26,7 +26,7 @@ class App {
     this.checkAnswer(userInputNumber);
   }
 
-  async checkAnswer(answer) {
+  checkAnswer(answer) {
     const answerArray = answer.split("").map(Number);
     const { strike, balls } = this.calculateResult(answerArray);
 
@@ -60,7 +60,7 @@ class App {
     userInputFlag === FLAG.YES ? this.play() : this.playQuit();
   }
 
-  async playQuit() {
+  playQuit() {
     this.printMessage(MESSAGES.GAME_OVER);
   }
 }
